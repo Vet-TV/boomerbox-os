@@ -1,0 +1,26 @@
+# Modern gaming
+steam-installer
+wine
+wine64
+winetricks
+gamemode
+
+# Retro gaming / emulation
+retroarch
+retroarch-assets
+libretro-snes9x
+libretro-nestopia
+libretro-genesisplusgx
+libretro-mgba
+libretro-mupen64plus-next
+dosbox
+dosbox-staging
+scummvm
+
+# Browsers (for cloud gaming)
+firefox-esr
+chromium
+
+# Useful media
+vlc
+ffmpeg

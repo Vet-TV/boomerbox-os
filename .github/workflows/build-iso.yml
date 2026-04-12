@@ -1,0 +1,55 @@
+name: Build BoomerBox ISO
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: debian:bookworm
+      options: --privileged
+
+    steps:
+      - name: Install build dependencies
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends \
+            live-build debootstrap squashfs-tools xorriso \
+            isolinux syslinux-common grub-pc-bin grub-efi-amd64-bin \
+            mtools dosfstools ca-certificates git sudo
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure live-build
+        run: |
+          chmod +x build.sh
+          ./build.sh
+
+      - name: Build ISO
+        run: lb build
+
+      - name: Rename ISO
+        run: |
+          mkdir -p out
+          mv boomerbox*.iso out/ || mv live-image-amd64.hybrid.iso out/boomerbox.iso
+
+      - name: Upload ISO artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: boomerbox-iso
+          path: out/*.iso
+          retention-days: 14
+
+      - name: Publish to Release (on tag)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: out/*.iso
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

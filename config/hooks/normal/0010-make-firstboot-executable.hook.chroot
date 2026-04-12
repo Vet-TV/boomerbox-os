@@ -1,0 +1,4 @@
+#!/bin/sh
+# Make the firstboot script executable inside the chroot
+set -e
+chmod +x /usr/local/bin/boomerbox-firstboot

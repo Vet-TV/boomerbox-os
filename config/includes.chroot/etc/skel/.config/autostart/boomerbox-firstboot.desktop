@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=BoomerBox First Boot Setup
+Exec=/usr/local/bin/boomerbox-firstboot
+X-GNOME-Autostart-enabled=true
+NoDisplay=true

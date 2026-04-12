@@ -1,0 +1,69 @@
+#!/bin/bash
+# BoomerBox first-boot setup
+# Runs once on first login to apply the Win95 theme and create cloud gaming shortcuts
+set -e
+
+MARKER="$HOME/.boomerbox-setup-done"
+[ -f "$MARKER" ] && exit 0
+
+echo "=== BoomerBox first-boot setup ==="
+
+# Install Chicago95 from upstream (GPL Win95 theme for XFCE)
+mkdir -p "$HOME/.themes" "$HOME/.icons" "$HOME/.local/share/fonts"
+cd /tmp
+if [ ! -d Chicago95 ]; then
+  git clone --depth=1 https://github.com/grassmunk/Chicago95.git
+fi
+cp -r Chicago95/Theme/Chicago95 "$HOME/.themes/" 2>/dev/null || true
+cp -r Chicago95/Icons/Chicago95 "$HOME/.icons/" 2>/dev/null || true
+cp -r Chicago95/Cursors/Chicago95 "$HOME/.icons/Chicago95-cursor" 2>/dev/null || true
+cp Chicago95/Fonts/*.ttf "$HOME/.local/share/fonts/" 2>/dev/null || true
+fc-cache -f
+
+# Apply theme via xfconf
+xfconf-query -c xsettings -p /Net/ThemeName -s "Chicago95" 2>/dev/null || true
+xfconf-query -c xsettings -p /Net/IconThemeName -s "Chicago95" 2>/dev/null || true
+xfconf-query -c xfwm4 -p /general/theme -s "Chicago95" 2>/dev/null || true
+
+# Apply Chicago95 Whisker Menu config (the Start button look)
+if [ -f /tmp/Chicago95/Extras/Whisker-Menu/whiskermenu-1.rc ]; then
+  mkdir -p "$HOME/.config/xfce4/panel"
+  cp /tmp/Chicago95/Extras/Whisker-Menu/whiskermenu-1.rc "$HOME/.config/xfce4/panel/"
+fi
+
+# Cloud gaming shortcuts (Chromium kiosk)
+DESKTOP_DIR="$HOME/Desktop"
+mkdir -p "$DESKTOP_DIR"
+
+cat > "$DESKTOP_DIR/GeForce-NOW.desktop" <<'EOF'
+[Desktop Entry]
+Type=Application
+Name=GeForce NOW
+Exec=chromium --app=https://play.geforcenow.com
+Icon=chromium
+Categories=Game;
+EOF
+
+cat > "$DESKTOP_DIR/Xbox-Cloud.desktop" <<'EOF'
+[Desktop Entry]
+Type=Application
+Name=Xbox Cloud Gaming
+Exec=chromium --app=https://www.xbox.com/play
+Icon=chromium
+Categories=Game;
+EOF
+
+cat > "$DESKTOP_DIR/Amazon-Luna.desktop" <<'EOF'
+[Desktop Entry]
+Type=Application
+Name=Amazon Luna
+Exec=chromium --app=https://luna.amazon.com
+Icon=chromium
+Categories=Game;
+EOF
+
+chmod +x "$DESKTOP_DIR"/*.desktop
+
+touch "$MARKER"
+notify-send "BoomerBox" "Welcome! Theme applied. Reboot for full effect." 2>/dev/null || true
+echo "=== BoomerBox setup complete ==="
