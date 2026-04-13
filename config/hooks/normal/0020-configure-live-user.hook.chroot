@@ -1,0 +1,10 @@
+#!/bin/sh
+set -e
+
+# Add the live user 'boomer' (created by live-config) to sudo group
+# and allow passwordless sudo (safe for a live ISO, makes firstboot work)
+echo 'boomer ALL=(ALL) NOPASSWD: ALL' > /etc/sudoers.d/boomer-nopasswd
+chmod 0440 /etc/sudoers.d/boomer-nopasswd
+
+# Pre-enable i386 multiarch at the chroot level too
+dpkg --add-architecture i386 || true

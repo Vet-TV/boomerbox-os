@@ -20,10 +20,14 @@ cp -r Chicago95/Cursors/Chicago95 "$HOME/.icons/Chicago95-cursor" 2>/dev/null ||
 cp Chicago95/Fonts/*.ttf "$HOME/.local/share/fonts/" 2>/dev/null || true
 fc-cache -f
 
-# Apply theme via xfconf
-xfconf-query -c xsettings -p /Net/ThemeName -s "Chicago95" 2>/dev/null || true
-xfconf-query -c xsettings -p /Net/IconThemeName -s "Chicago95" 2>/dev/null || true
-xfconf-query -c xfwm4 -p /general/theme -s "Chicago95" 2>/dev/null || true
+# Apply theme via xfconf (set all relevant properties)
+xfconf-query -c xsettings -p /Net/ThemeName -s "Chicago95" --create -t string 2>/dev/null || true
+xfconf-query -c xsettings -p /Net/IconThemeName -s "Chicago95" --create -t string 2>/dev/null || true
+xfconf-query -c xfwm4 -p /general/theme -s "Chicago95" --create -t string 2>/dev/null || true
+xfconf-query -c xsettings -p /Gtk/CursorThemeName -s "Chicago95-cursor" --create -t string 2>/dev/null || true
+
+# Force XFCE to reload settings
+xfce4-panel --restart 2>/dev/null || true
 
 # Apply Chicago95 Whisker Menu config (the Start button look)
 if [ -f /tmp/Chicago95/Extras/Whisker-Menu/whiskermenu-1.rc ]; then
@@ -67,7 +71,11 @@ chmod +x "$DESKTOP_DIR"/*.desktop
 # Install Steam on first boot (can't be baked into ISO due to i386 multiarch timing)
 if ! command -v steam >/dev/null 2>&1; then
   notify-send "BoomerBox" "Installing Steam... this may take a few minutes." 2>/dev/null || true
-  pkexec bash -c "dpkg --add-architecture i386 && apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y steam-installer" || true
+  (
+    sudo dpkg --add-architecture i386
+    sudo apt-get update
+    sudo DEBIAN_FRONTEND=noninteractive apt-get install -y steam-installer 2>&1
+  ) > /tmp/boomerbox-steam-install.log 2>&1 &
 fi
 touch "$MARKER"
 notify-send "BoomerBox" "Welcome! Theme applied. Reboot for full effect." 2>/dev/null || true
