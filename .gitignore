@@ -11,3 +11,4 @@ config/source
 *.img
 *.log
 out/
+.claude/
