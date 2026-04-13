@@ -64,6 +64,11 @@ EOF
 
 chmod +x "$DESKTOP_DIR"/*.desktop
 
+# Install Steam on first boot (can't be baked into ISO due to i386 multiarch timing)
+if ! command -v steam >/dev/null 2>&1; then
+  notify-send "BoomerBox" "Installing Steam... this may take a few minutes." 2>/dev/null || true
+  pkexec bash -c "dpkg --add-architecture i386 && apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y steam-installer" || true
+fi
 touch "$MARKER"
 notify-send "BoomerBox" "Welcome! Theme applied. Reboot for full effect." 2>/dev/null || true
 echo "=== BoomerBox setup complete ==="
