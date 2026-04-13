@@ -12,9 +12,7 @@ libretro-snes9x
 libretro-nestopia
 libretro-genesisplusgx
 libretro-mgba
-libretro-mupen64plus-next
 dosbox
-dosbox-staging
 scummvm
 
 # Browsers (for cloud gaming)
