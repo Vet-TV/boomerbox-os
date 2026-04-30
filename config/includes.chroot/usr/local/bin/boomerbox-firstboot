@@ -1,7 +1,7 @@
 #!/bin/bash
 # BoomerBox first-boot setup. Idempotent.
-# Theme is pre-installed system-wide and applied via /etc/skel xfconf XML.
-# This script only handles the deferred Steam install + a defensive theme reapply.
+# Fetches Chicago95 (theme/icons/cursors/fonts) and applies it.
+# Also kicks off the deferred Steam install.
 set -u
 
 MARKER="$HOME/.boomerbox-firstboot-done"
@@ -11,7 +11,26 @@ LOG="$HOME/.boomerbox-firstboot.log"
 {
   echo "=== BoomerBox first-boot $(date -Iseconds) ==="
 
-  # Defensive theme apply, in case xfconf XML defaults didn't take this session.
+  # --- Chicago95 install (per-user) ---
+  install -d "$HOME/.themes" "$HOME/.icons" "$HOME/.local/share/fonts"
+  WORK="$(mktemp -d)"
+  if git clone --depth=1 https://github.com/grassmunk/Chicago95.git "$WORK/Chicago95"; then
+    cp -r "$WORK/Chicago95/Theme/Chicago95"   "$HOME/.themes/"  || true
+    cp -r "$WORK/Chicago95/Icons/Chicago95"   "$HOME/.icons/"   || true
+    cp -r "$WORK/Chicago95/Cursors/Chicago95" "$HOME/.icons/Chicago95-cursor" || true
+    find "$WORK/Chicago95/Fonts" -type f \( -iname '*.ttf' -o -iname '*.otf' \) \
+      -exec cp {} "$HOME/.local/share/fonts/" \; || true
+    fc-cache -f || true
+    if [ -f "$WORK/Chicago95/Extras/Whisker-Menu/whiskermenu-1.rc" ]; then
+      install -d "$HOME/.config/xfce4/panel"
+      cp "$WORK/Chicago95/Extras/Whisker-Menu/whiskermenu-1.rc" \
+         "$HOME/.config/xfce4/panel/whiskermenu-1.rc" || true
+    fi
+  fi
+  rm -rf "$WORK"
+
+  # Apply theme via xfconf (xfconf XML defaults in /etc/skel handle this on
+  # the first session, but reapply here as a belt-and-braces).
   xfconf-query -c xsettings -p /Net/ThemeName       -s "Chicago95"        --create -t string || true
   xfconf-query -c xsettings -p /Net/IconThemeName   -s "Chicago95"        --create -t string || true
   xfconf-query -c xsettings -p /Gtk/CursorThemeName -s "Chicago95-cursor" --create -t string || true
@@ -22,8 +41,6 @@ LOG="$HOME/.boomerbox-firstboot.log"
   for f in "$HOME/Desktop"/*.desktop; do
     [ -f "$f" ] || continue
     chmod +x "$f" || true
-    gio set "$f" metadata::xfce-exe-checksum \
-      "$(sha256sum "$f" | awk '{print $1}')" 2>/dev/null || true
   done
 } >>"$LOG" 2>&1
 
