@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Xbox Cloud Gaming
+GenericName=Cloud Gaming
+Comment=Microsoft Xbox cloud gaming
+Exec=chromium --app=https://www.xbox.com/play
+Icon=chromium
+Terminal=false
+Categories=Game;
+StartupNotify=true

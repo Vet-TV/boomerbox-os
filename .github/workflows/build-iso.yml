@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
     tags: ['v*']
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -28,6 +30,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Read version
+        id: version
+        run: |
+          VERSION="$(tr -d '[:space:]' < VERSION)"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Building BoomerBox OS v$VERSION"
+
       - name: Configure live-build
         run: |
           chmod +x build.sh
@@ -36,15 +45,22 @@ jobs:
       - name: Build ISO
         run: lb build
 
-      - name: Rename ISO
+      - name: Collect ISO
         run: |
           mkdir -p out
-          mv boomerbox*.iso out/ || mv live-image-amd64.hybrid.iso out/boomerbox.iso
+          # live-build with --image-name "boomerbox-<ver>" produces e.g.
+          # boomerbox-0.2.0-alpha-amd64.hybrid.iso. Catch any naming variant.
+          if ls boomerbox-*.iso >/dev/null 2>&1; then
+            mv boomerbox-*.iso out/
+          else
+            mv live-image-amd64.hybrid.iso "out/boomerbox-${{ steps.version.outputs.version }}-amd64.hybrid.iso"
+          fi
+          ls -la out/
 
       - name: Upload ISO artifact
         uses: actions/upload-artifact@v4
         with:
-          name: boomerbox-iso
+          name: boomerbox-${{ steps.version.outputs.version }}-iso
           path: out/*.iso
           retention-days: 14
 
@@ -54,5 +70,6 @@ jobs:
         with:
           files: out/*.iso
           generate_release_notes: true
+          body_path: CHANGELOG.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
