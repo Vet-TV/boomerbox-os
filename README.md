@@ -2,7 +2,7 @@
 
 A retro-styled, modern Linux distribution for gaming. Looks like Windows 98. Runs on modern hardware. Plays everything from DOS to Steam.
 
-Built on **Debian Bookworm + XFCE + Chicago95 theme**. Ships Steam (installed on first boot), Wine, RetroArch, DOSBox, ScummVM, MangoHud, and cloud gaming shortcuts (GeForce NOW, Xbox Cloud, Amazon Luna) out of the box.
+Built on **Debian Bookworm + XFCE + Chicago95 theme**. Ships Steam (installed on first boot), Wine, RetroArch, DOSBox, ScummVM, and cloud gaming shortcuts (GeForce NOW, Xbox Cloud, Amazon Luna) out of the box.
 
 ## Status
 **Current release:** `0.2.0-alpha`. Alpha quality — not ready for daily driving. Test in a VM first.
@@ -42,7 +42,7 @@ git push origin v0.2.0-alpha
 ## What's on the ISO
 
 - **Desktop:** XFCE 4 with the [Chicago95](https://github.com/grassmunk/Chicago95) theme pre-applied (icons, cursors, Whisker Start menu, fonts).
-- **Modern gaming:** Steam (deferred install on first boot), Wine + winetricks, GameMode, MangoHud, full gamepad/joystick stack.
+- **Modern gaming:** Steam (deferred install on first boot), Wine + winetricks, GameMode, full gamepad/joystick stack.
 - **Retro gaming:** RetroArch with SNES, NES, Genesis, and GBA cores; ScummVM; DOSBox.
 - **Cloud gaming:** One-click launchers for GeForce NOW, Xbox Cloud, and Amazon Luna (via Chromium app mode).
 - **Drivers/firmware:** Mesa, AMD/Intel/Nouveau X drivers, full non-free firmware, Intel + AMD microcode.

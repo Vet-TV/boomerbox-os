@@ -3,7 +3,6 @@ wine
 wine64
 winetricks
 gamemode
-mangohud
 
 # Gamepad / joystick support
 joystick

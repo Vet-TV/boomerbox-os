@@ -15,7 +15,6 @@ BoomerBox OS bundles open-source software. Each component retains its original l
 | DOSBox | GPLv2 | dosbox.com |
 | ScummVM | GPLv3 | scummvm.org |
 | Mesa drivers | MIT | mesa3d.org |
-| MangoHud | MIT | github.com/flightlessmango/MangoHud |
 | GameMode | BSD-3-Clause | github.com/FeralInteractive/gamemode |
 
 BoomerBox OS itself (configuration, scripts, branding) is licensed under GPLv3.

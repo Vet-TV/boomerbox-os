@@ -15,7 +15,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Cloud-gaming launchers (GeForce NOW, Xbox Cloud, Amazon Luna) ship as proper
   system-wide `.desktop` entries — they appear in the Start menu *and* on every
   new user's Desktop.
-- MangoHud overlay for in-game performance metrics.
 - Gamepad / joystick support: `joystick`, `jstest-gtk`, `evtest`.
 - ISO and image filenames are now version-stamped (e.g. `boomerbox-0.2.0-alpha-amd64.hybrid.iso`).
 - `VERSION` file as the single source of truth for the release version.
