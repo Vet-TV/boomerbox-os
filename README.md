@@ -42,7 +42,7 @@ git push origin v0.2.0-alpha
 ## What's on the ISO
 
 - **Desktop:** XFCE 4 with the [Chicago95](https://github.com/grassmunk/Chicago95) theme pre-applied (icons, cursors, Whisker Start menu, fonts).
-- **Modern gaming:** Steam (deferred install on first boot), Wine + winetricks, GameMode, full gamepad/joystick stack.
+- **Modern gaming:** Steam (deferred install on first boot), Wine + winetricks, GameMode.
 - **Retro gaming:** RetroArch with SNES, NES, Genesis, and GBA cores; ScummVM; DOSBox.
 - **Cloud gaming:** One-click launchers for GeForce NOW, Xbox Cloud, and Amazon Luna (via Chromium app mode).
 - **Drivers/firmware:** Mesa, AMD/Intel/Nouveau X drivers, full non-free firmware, Intel + AMD microcode.

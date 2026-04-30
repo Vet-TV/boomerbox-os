@@ -4,11 +4,6 @@ wine64
 winetricks
 gamemode
 
-# Gamepad / joystick support
-joystick
-jstest-gtk
-evtest
-
 # Retro gaming / emulation
 retroarch
 retroarch-assets

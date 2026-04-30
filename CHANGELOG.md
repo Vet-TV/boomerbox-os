@@ -9,13 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Chicago95 theme, icons, cursors, and bundled GPL fonts are now pre-installed
-  system-wide during ISO build (no internet required at first boot).
+  system-wide during ISO build (no internet required at first boot). The fetch
+  runs on the build host via `build.sh`, so the chroot doesn't need network
+  for it.
 - XFCE xfconf defaults baked into `/etc/skel` so the Win95 look is applied on
   first session start without any user intervention.
 - Cloud-gaming launchers (GeForce NOW, Xbox Cloud, Amazon Luna) ship as proper
   system-wide `.desktop` entries — they appear in the Start menu *and* on every
   new user's Desktop.
-- Gamepad / joystick support: `joystick`, `jstest-gtk`, `evtest`.
 - ISO and image filenames are now version-stamped (e.g. `boomerbox-0.2.0-alpha-amd64.hybrid.iso`).
 - `VERSION` file as the single source of truth for the release version.
 - `CHANGELOG.md`.

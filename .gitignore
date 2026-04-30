@@ -12,3 +12,10 @@ config/source
 *.log
 out/
 .claude/
+
+# Chicago95 assets staged by build.sh on the host (not committed).
+config/includes.chroot/usr/share/themes/Chicago95/
+config/includes.chroot/usr/share/icons/Chicago95/
+config/includes.chroot/usr/share/icons/Chicago95-cursor/
+config/includes.chroot/usr/share/fonts/truetype/chicago95/
+config/includes.chroot/etc/skel/.config/xfce4/panel/whiskermenu-1.rc
