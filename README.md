@@ -27,7 +27,7 @@ docker run --rm --privileged -v "${PWD}:/build" -w /build debian:bookworm bash -
 
 The ISO lands in `./out/`. Flash with [Ventoy](https://www.ventoy.net) or `dd`.
 
-**Build time:** 30–60 minutes on first run (downloads ~3 GB of Debian packages and the Chicago95 theme). Subsequent builds reuse the apt cache.
+**Build time:** 30–60 minutes on first run (downloads ~3 GB of Debian packages). Subsequent builds reuse the apt cache.
 
 ## Automated Builds
 Every push to `main` triggers a GitHub Actions build that uploads the ISO as a workflow artifact. Tagging a commit `vX.Y.Z[-suffix]` (e.g. `v0.2.0-alpha`) publishes the ISO to the [Releases page](https://github.com/Vet-TV/boomerbox-os/releases) automatically.
@@ -41,7 +41,7 @@ git push origin v0.2.0-alpha
 
 ## What's on the ISO
 
-- **Desktop:** XFCE 4 with the [Chicago95](https://github.com/grassmunk/Chicago95) theme pre-applied (icons, cursors, Whisker Start menu, fonts).
+- **Desktop:** XFCE 4 with the [Chicago95](https://github.com/grassmunk/Chicago95) theme (icons, cursors, Whisker Start menu, fonts) — fetched and applied automatically on first boot (network required).
 - **Modern gaming:** Steam (deferred install on first boot), Wine + winetricks, GameMode.
 - **Retro gaming:** RetroArch with SNES, NES, Genesis, and GBA cores; ScummVM; DOSBox.
 - **Cloud gaming:** One-click launchers for GeForce NOW, Xbox Cloud, and Amazon Luna (via Chromium app mode).
@@ -59,7 +59,7 @@ git push origin v0.2.0-alpha
 - **Password:** *(none — passwordless login on the live ISO; passwordless `sudo` is enabled for convenience)*
 
 ## License
-GPLv3. Third-party components retain their original licenses — see [THIRD_PARTY_LICENSES.md](./THIRD_PARTY_LICENSES.md).
+[GPL-3.0-or-later](./LICENSE). Third-party components retain their original licenses — see [THIRD_PARTY_LICENSES.md](./THIRD_PARTY_LICENSES.md).
 
 ## Credits
 - [Chicago95](https://github.com/grassmunk/Chicago95) — the Win95 theme that makes this whole thing work.
