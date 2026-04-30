@@ -1,0 +1,10 @@
+#!/bin/sh
+# Mirror system-wide BoomerBox launchers onto every new user's Desktop.
+set -e
+
+mkdir -p /etc/skel/Desktop
+for f in /usr/share/applications/boomerbox-*.desktop; do
+  [ -f "$f" ] || continue
+  cp "$f" /etc/skel/Desktop/
+done
+chmod +x /etc/skel/Desktop/*.desktop 2>/dev/null || true

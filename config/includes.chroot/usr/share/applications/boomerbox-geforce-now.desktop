@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=GeForce NOW
+GenericName=Cloud Gaming
+Comment=NVIDIA GeForce NOW cloud gaming
+Exec=chromium --app=https://play.geforcenow.com
+Icon=chromium
+Terminal=false
+Categories=Game;
+StartupNotify=true

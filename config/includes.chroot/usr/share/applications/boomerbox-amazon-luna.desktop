@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Amazon Luna
+GenericName=Cloud Gaming
+Comment=Amazon Luna cloud gaming
+Exec=chromium --app=https://luna.amazon.com
+Icon=chromium
+Terminal=false
+Categories=Game;
+StartupNotify=true
